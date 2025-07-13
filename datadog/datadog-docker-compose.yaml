@@ -1,0 +1,99 @@
+version: '3.8'
+
+networks:
+  o11y-labs-net:
+    driver: bridge
+
+services:
+  app1-gateway:
+    build: .
+    image: o11ylabs-app1-gateway:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SERVER_PORT: 8080
+      SPRING_PROFILES_ACTIVE: dev,prettylog
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentbit:24224
+        tag: app1-gateway.logs
+    networks:
+      - o11y-labs-net    
+
+  app2:
+    image: o11ylabs-app2:latest
+    depends_on:
+      - postgres
+    networks:
+      - o11y-labs-net
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app2db
+    ports:
+      - "5432:5432"
+    networks:
+      - o11y-labs-net
+
+  app3:
+    image: o11ylabs-app3:latest
+    depends_on:
+      - redis
+    networks:
+      - o11y-labs-net
+
+  redis:
+    image: valkey/valkey:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - o11y-labs-net
+
+  app4:
+    image: o11ylabs-app4:latest
+    depends_on:
+      - activemq
+    networks:
+      - o11y-labs-net
+
+  activemq:
+    image: rmohr/activemq:latest
+    ports:
+      - "61616:61616"   # JMS port
+      - "8161:8161"     # Web Console
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+      ACTIVEMQ_CONFIG_NAME: broker
+      ACTIVEMQ_MIN_MEMORY: 512M
+      ACTIVEMQ_MAX_MEMORY: 2048M
+    networks:
+      - o11y-labs-net
+      
+  fluentbit:
+    image: fluent/fluent-bit:latest
+    volumes:
+      - ./datadog-fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+    ports:
+      - "24224:24224"            
+    networks:
+      - o11y-labs-net
+      
+  datadog:
+    image: datadog/agent:latest
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=datadoghq.com
+      - DD_LOGS_ENABLED=true
+      - DD_APM_ENABLED=true
+      - DD_PROCESS_AGENT_ENABLED=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - o11y-labs-net

@@ -16,6 +16,20 @@ services:
     networks:
       - o11y-labs-net
 
+  # app1-gateway:
+  #   build: .
+  #   image: o11ylabs-app1-gateway:latest
+  #   environment:
+  #     - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+  #     - NEW_RELIC_APP_NAME=o11ylabs-app1-gateway
+  #   entrypoint: >
+  #     java -javaagent:/newrelic/newrelic.jar
+  #     -jar app.jar
+  #     --server.port=${SERVER_PORT}
+  #     --spring.profiles.active=${SPRING_PROFILES_ACTIVE}
+  #   networks:
+  #     - o11y-labs-net      
+
   app2:
     image: o11ylabs-app2:latest
     depends_on:
@@ -66,5 +80,27 @@ services:
       ACTIVEMQ_CONFIG_NAME: broker
       ACTIVEMQ_MIN_MEMORY: 512M
       ACTIVEMQ_MAX_MEMORY: 2048M
+    networks:
+      - o11y-labs-net
+
+  fluentbit:
+    image: newrelic/newrelic-fluentbit-output:latest
+    volumes:
+      - ./newrelic-fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+    ports:
+      - "24224:24224"
+    networks:
+      - o11y-labs-net      
+
+  datadog:
+    image: datadog/agent:latest
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=datadoghq.com
+      - DD_LOGS_ENABLED=true
+      - DD_APM_ENABLED=true
+      - DD_PROCESS_AGENT_ENABLED=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - o11y-labs-net
