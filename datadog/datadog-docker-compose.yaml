@@ -32,7 +32,7 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: app2db
     ports:
       - "5432:5432"
@@ -67,7 +67,7 @@ services:
       - "8161:8161"     # Web Console
     environment:
       ACTIVEMQ_ADMIN_LOGIN: admin
-      ACTIVEMQ_ADMIN_PASSWORD: admin
+      ACTIVEMQ_ADMIN_PASSWORD: ${ACTIVEMQ_ADMIN_PASSWORD}
       ACTIVEMQ_CONFIG_NAME: broker
       ACTIVEMQ_MIN_MEMORY: 512M
       ACTIVEMQ_MAX_MEMORY: 2048M
