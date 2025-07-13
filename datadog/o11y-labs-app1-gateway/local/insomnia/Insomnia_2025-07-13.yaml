@@ -1,0 +1,110 @@
+type: spec.insomnia.rest/5.0
+name: O11Y - Labs
+meta:
+  id: wrk_1cac7f97076f40eb92b4be161bd1eae4
+  created: 1752356925772
+  modified: 1752356925772
+  description: ""
+collection:
+  - url: http://localhost:3001/moock/users
+    name: Moock - Users
+    meta:
+      id: req_dda8168fe5f14e0a98cd1b3c5ad31bcb
+      created: 1752357085780
+      modified: 1752373790927
+      isPrivate: false
+      description: ""
+      sortKey: -1752357085780
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/users
+    name: Gateway - Users
+    meta:
+      id: req_6fb9b5738223447b8835e042595f60be
+      created: 1752357641155
+      modified: 1752374362845
+      isPrivate: false
+      description: ""
+      sortKey: -1750248582601.5
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:3001/moock/books
+    name: Moock - Books
+    meta:
+      id: req_514e7b24936f4214b83a96cbd8e9cabf
+      created: 1752376106361
+      modified: 1752376109455
+      isPrivate: false
+      description: ""
+      sortKey: -1751302834190.75
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/books
+    name: Gateway - Books
+    meta:
+      id: req_af45b843d324459fa53cb9a54539013e
+      created: 1752376226290
+      modified: 1752376335988
+      isPrivate: false
+      description: ""
+      sortKey: -1749194331012.25
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_59d555e5c276a5b4c99ba929d0f7662fb95fe4e6
+    created: 1752356925802
+    modified: 1752356925802
+environments:
+  name: Base Environment
+  meta:
+    id: env_59d555e5c276a5b4c99ba929d0f7662fb95fe4e6
+    created: 1752356925800
+    modified: 1752356925800
+    isPrivate: false
+spec:
+  meta:
+    id: spc_5b7cec8adc864f0991b33a63fd145519
+    created: 1752356925794
+    modified: 1752356965650
