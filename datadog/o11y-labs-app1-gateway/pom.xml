@@ -11,7 +11,7 @@
     </parent>
     <groupId>br.com.jhegner</groupId>
     <artifactId>o11ylabs.app1.gateway</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>o11ylabs.app1.gateway</name>
     <description>O11y app1 for labs gateway</description>
     <url />
