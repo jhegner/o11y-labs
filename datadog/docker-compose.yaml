@@ -77,7 +77,7 @@ services:
   fluentbit:
     image: fluent/fluent-bit:latest
     volumes:
-      - ./datadog-fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
     environment:
       - DD_API_KEY=${DD_API_KEY}
     ports:

@@ -17,34 +17,14 @@ gateway:
       realPath: /moock/books
       stripPrefix: 2
 
-# spring:  
-#   cloud:
-#     gateway:
-#       server:
-#         webflux:          
-#           routes:
-#             - id: users # rest
-#               uri: http://localhost:3001
-#               predicates:
-#                 - Path=/api/users # path public que será exposto pelo gateway
-#               methods:
-#                 - GET
-#               filters:
-#                 - StripPrefix=2 # Remove /api/users do path antes de encaminhar
-#                 - SetPath=/moock/users # Define o novo path
-
-#             - id: products # grpc (proxy interno)
-#               uri: http://localhost:8082 # Outra URL fictícia
-#               predicates:
-#                 - Path=/api/products # path public que será exposto pelo gateway
-#               filters:
-#                 - StripPrefix=2 # Remove /api/products do path antes de encaminhar
-
 management:
   endpoints:
     web:
       exposure:
         include: "*" # Expõe todos os endpoints do Actuator (incluindo /actuator/prometheus para métricas)
+  logging:
+    export:
+      enabled: true
   tracing:
     enabled: true
     sampling:
@@ -54,6 +34,9 @@ management:
       export:
         enabled: true
         step: 30s # Intervalo de envio de métricas para o Datadog
+        api-key: ${DD_API_KEY}
+        application-key: ${DD_APPS_KEY}
+        uri: https://${DD_URI_SITE}
 
 logging:
   level:

@@ -75,7 +75,7 @@ services:
   fluentbit:
     image: newrelic/newrelic-fluentbit-output:latest
     volumes:
-      - ./newrelic-fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf:ro
     ports:
       - "24224:24224"
     networks:
